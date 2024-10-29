@@ -1,0 +1,245 @@
+******Balanced Word*******
+
+import java.util.Scanner;
+
+public class BalancedWordChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the string:");
+        
+        String word = scanner.nextLine();
+
+        // Check for invalid string conditions
+        if (word.length() < 2 || !word.matches("[a-z]+")) {
+            System.out.println(word + " is an invalid string");
+            return; // terminate the program
+        }
+
+        // Calculate the midpoint
+        int length = word.length();
+        int mid = length / 2;
+
+        // Calculate left and right sums
+        int leftSum = 0;
+        int rightSum = 0;
+
+        // Left-hand side characters
+        for (int i = 0; i < mid; i++) {
+            leftSum += charValue(word.charAt(i));
+        }
+
+        // Right-hand side characters
+        for (int i = length - mid; i < length; i++) {
+            rightSum += charValue(word.charAt(i));
+        }
+
+        // Determine if the word is balanced
+        if (leftSum == rightSum) {
+            System.out.println(word + " is a balanced word");
+        } else {
+            System.out.println(word + " is not a balanced word");
+        }
+    }
+
+    // Method to get the positional value of a character
+    private static int charValue(char c) {
+        return c - 'a' + 1; // 'a' is 1, 'b' is 2, ..., 'z' is 26
+    }
+}
+
+
+
+********Alphabetical Order********
+
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class AlphabeticalOrderChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the string:");
+        
+        String input = scanner.nextLine().trim();
+
+        // Input validation
+        if (input.length() < 3) {
+            System.out.println("The string " + input + " must contain at least three letters");
+            return; // terminate the program
+        }
+        
+        if (!input.matches("[a-z]+")) {
+            System.out.println(input + " is an invalid string");
+            return; // terminate the program
+        }
+
+        // Check if the string is in alphabetical order
+        boolean isInOrder = isAlphabeticalOrder(input);
+
+        if (isInOrder) {
+            // If in order, reverse the string and calculate the sum of ASCII values
+            String reversedString = new StringBuilder(input).reverse().toString();
+            int asciiSum = calculateAsciiSum(reversedString);
+            System.out.println(reversedString + asciiSum + " is in the order");
+        } else {
+            // If not in order, rearrange the string and print the result
+            String rearrangedString = rearrangeString(input);
+            System.out.println(rearrangedString + " is now ordered");
+        }
+    }
+
+    // Method to check if the string is in alphabetical order
+    private static boolean isAlphabeticalOrder(String str) {
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) < str.charAt(i - 1)) {
+                return false; // Not in order
+            }
+        }
+        return true; // In order
+    }
+
+    // Method to calculate the sum of ASCII values
+    private static int calculateAsciiSum(String str) {
+        int sum = 0;
+        for (char c : str.toCharArray()) {
+            sum += (int) c; // Add ASCII value of the character
+        }
+        return sum;
+    }
+
+    // Method to rearrange the string in alphabetical order
+    private static String rearrangeString(String str) {
+        char[] chars = str.toCharArray();
+        Arrays.sort(chars); // Sort the characters
+        return new String(chars); // Return as a string
+    }
+}
+
+
+*******Verbiage Hunt*********
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class TreasureHunt {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input for word count
+        System.out.println("Enter word count");
+        int wordCount = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Validate word count
+        if (wordCount < 2) {
+            System.out.println("Invalid word count");
+            return; // Terminate the program
+        }
+
+        // Input for words
+        List<String> words = new ArrayList<>();
+        System.out.println("Enter the words");
+        for (int i = 0; i < wordCount; i++) {
+            String word = scanner.nextLine().trim();
+            // Validate the word for special characters, numbers, or whitespace
+            if (!word.matches("[a-zA-Z]+")) {
+                System.out.println(word + " is an invalid word");
+                return; // Terminate the program
+            }
+            words.add(word);
+        }
+
+        // Input for the character to search
+        System.out.println("Enter the character to search");
+        char searchChar = scanner.nextLine().charAt(0);
+
+        // Lists to hold valid words
+        List<String> withDuplicates = new ArrayList<>();
+        List<String> withoutDuplicates = new ArrayList<>();
+
+        // Filter words based on character occurrences
+        for (String word : words) {
+            int count = 0;
+            for (char c : word.toCharArray()) {
+                if (c == searchChar) {
+                    count++;
+                }
+            }
+            if (count > 0) {
+                if (count == 1) {
+                    withoutDuplicates.add(word);
+                } else {
+                    withDuplicates.add(word);
+                }
+            }
+        }
+
+        // Output results
+        if (withDuplicates.isEmpty() && withoutDuplicates.isEmpty()) {
+            System.out.println("No words found");
+        } else {
+            if (!withoutDuplicates.isEmpty()) {
+                System.out.println("Without duplicates: " + String.join(" ", withoutDuplicates));
+            }
+            if (!withDuplicates.isEmpty()) {
+                System.out.println("With duplicates: " + String.join(" ", withDuplicates));
+            }
+        }
+    }
+}
+
+
+
+*********LasT Index*****
+
+import java.util.Scanner;
+
+public class CapitalizeLastLetter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Prompt for input
+        System.out.println("Enter the string");
+        String input = scanner.nextLine();
+
+        // Validate input for numbers
+        if (input.matches(".*\\d.*")) {
+            System.out.println(input + " is an invalid input with numbers");
+            return; // Terminate the program
+        }
+
+        // Validate input for special characters
+        if (input.matches(".*[^a-zA-Z\\s].*")) {
+            System.out.println(input + " is an invalid input with special characters");
+            return; // Terminate the program
+        }
+
+        // Process the valid input
+        String[] words = input.split(" ");
+        StringBuilder modifiedString = new StringBuilder();
+        
+        for (String word : words) {
+            String modifiedWord = word;
+            // Capitalize the last letter
+            if (word.length() > 0) {
+                char lastChar = word.charAt(word.length() - 1);
+                if (Character.isLowerCase(lastChar)) {
+                    modifiedWord = word.substring(0, word.length() - 1) + Character.toUpperCase(lastChar);
+                }
+            }
+            modifiedString.append(modifiedWord).append(" ");
+            
+            // Check if the last letter was already uppercase
+            if (word.length() > 0 && Character.isUpperCase(word.charAt(word.length() - 1))) {
+                System.out.println(word + word.length());
+            }
+        }
+
+        // Print the modified string
+        System.out.println("Modified string: " + modifiedString.toString().trim());
+    }
+}
+
+
+*******END********

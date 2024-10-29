@@ -1,0 +1,360 @@
+****Global Trash*****
+
+#Util Class:
+
+import java.util.*;
+
+public class CarsInfo {
+    private Map<String, Float> carDetailsMap = new HashMap<>();
+
+    public Map<String, Float> getCarDetailsMap() {
+        return carDetailsMap;
+    }
+
+    public void setCarDetailsMap(Map<String, Float> carDetailsMap) {
+        this.carDetailsMap = carDetailsMap;
+    }
+
+    // Method to add car details
+    public void addCarsDetails(String carName, float rating) {
+        carDetailsMap.put(carName, rating);
+    }
+
+    // Method to find car rating
+    public float findCarRating(String carName) {
+        return carDetailsMap.getOrDefault(carName, -1.0f);
+    }
+
+    // Method to find cars with the highest rating
+    public List<String> findCarsWithHighestRating() {
+        List<String> highestRatedCars = new ArrayList<>();
+        for (Map.Entry<String, Float> entry : carDetailsMap.entrySet()) {
+            if (entry.getValue() == 5.0f) {
+                highestRatedCars.add(entry.getKey());
+            }
+        }
+        return highestRatedCars;
+    }
+}
+
+
+
+#UserInterface:
+
+import java.util.*;
+
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        CarsInfo carsInfo = new CarsInfo();
+
+        System.out.println("Enter number of car details to be added:");
+        int numberOfCars = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter the car details (Car Name : Rating):");
+        for (int i = 0; i < numberOfCars; i++) {
+            String carDetail = scanner.nextLine();
+            String[] details = carDetail.split(":");
+            String carName = details[0].trim();
+            float rating = Float.parseFloat(details[1].trim());
+            carsInfo.addCarsDetails(carName, rating);
+        }
+
+        System.out.println("Enter the car name needs to be searched:");
+        String searchCarName = scanner.nextLine().trim();
+        float rating = carsInfo.findCarRating(searchCarName);
+
+        if (rating == -1) {
+            System.out.println(searchCarName + " is not available in the given car details");
+        } else {
+            System.out.println(rating);
+        }
+
+        List<String> highestRatedCars = carsInfo.findCarsWithHighestRating();
+        System.out.println("The names of the cars with the highest rating are:");
+        if (highestRatedCars.isEmpty()) {
+            System.out.println("No cars were found with the highest rating");
+        } else {
+            for (String car : highestRatedCars) {
+                System.out.println(car);
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
+********Z Movies********
+
+
+# Util Class:
+
+import java.util.*;
+
+public class MoviesInfo {
+    private Map<String, Float> movieDetailsMap = new HashMap<>();
+
+    public Map<String, Float> getMovieDetailsMap() {
+        return movieDetailsMap;
+    }
+
+    public void setMovieDetailsMap(Map<String, Float> movieDetailsMap) {
+        this.movieDetailsMap = movieDetailsMap;
+    }
+
+    // Method to add movie details
+    public void addMoviesDetails(String movieName, float rating) {
+        movieDetailsMap.put(movieName, rating);
+    }
+
+    // Method to find movie rating
+    public float findMovieRating(String movieName) {
+        return movieDetailsMap.getOrDefault(movieName, -1.0f);
+    }
+
+    // Method to find movies with the highest rating
+    public List<String> findMoviesWithHighestRating() {
+        List<String> highestRatedMovies = new ArrayList<>();
+        for (Map.Entry<String, Float> entry : movieDetailsMap.entrySet()) {
+            if (entry.getValue() == 5.0f) {
+                highestRatedMovies.add(entry.getKey());
+            }
+        }
+        return highestRatedMovies;
+    }
+}
+
+
+
+# UserInterface:
+
+import java.util.*;
+
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        MoviesInfo moviesInfo = new MoviesInfo();
+
+        System.out.println("Enter number of movie details to be added:");
+        int numberOfMovies = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter the movie details (Movie Name : Rating):");
+        for (int i = 0; i < numberOfMovies; i++) {
+            String movieDetail = scanner.nextLine();
+            String[] details = movieDetail.split(":");
+            String movieName = details[0].trim();
+            float rating = Float.parseFloat(details[1].trim());
+            moviesInfo.addMoviesDetails(movieName, rating);
+        }
+
+        System.out.println("Enter the movie name needs to be searched:");
+        String searchMovieName = scanner.nextLine().trim();
+        float rating = moviesInfo.findMovieRating(searchMovieName);
+
+        if (rating == -1) {
+            System.out.println(searchMovieName + " is not available in the given movie details");
+        } else {
+            System.out.println(rating);
+        }
+
+        List<String> highestRatedMovies = moviesInfo.findMoviesWithHighestRating();
+        System.out.println("The names of the movies with the highest rating are:");
+        if (highestRatedMovies.isEmpty()) {
+            System.out.println("No movies were found with the highest rating");
+        } else {
+            for (String movie : highestRatedMovies) {
+                System.out.println(movie);
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
+
+*******Bridge Scarlet*******
+
+# Util Class:
+
+import java.util.*;
+
+public class Pipe {
+    private Map<String, String> pipeMap = new HashMap<>();
+
+    public Map<String, String> getPipeMap() {
+        return pipeMap;
+    }
+
+    public void setPipeMap(Map<String, String> pipeMap) {
+        this.pipeMap = pipeMap;
+    }
+
+    // Method to add pipe details
+    public void addPipe(String orderId, String pipeType) {
+        pipeMap.put(orderId, pipeType);
+    }
+
+    // Method to find count of order IDs based on the pipe type
+    public int findCountOfOrderIdsBasedOnThePipeType(String pipeType) {
+        int count = 0;
+        for (String type : pipeMap.values()) {
+            if (type.equals(pipeType)) {
+                count++;
+            }
+        }
+        return count > 0 ? count : -1; // Return count or -1 if none found
+    }
+
+    // Method to find order IDs based on the pipe type
+    public List<String> findOrderIdsBasedOnThePipeType(String pipeType) {
+        List<String> orderIds = new ArrayList<>();
+        for (Map.Entry<String, String> entry : pipeMap.entrySet()) {
+            if (entry.getValue().equals(pipeType)) {
+                orderIds.add(entry.getKey());
+            }
+        }
+        return orderIds; // Return list of order IDs
+    }
+}
+
+
+
+# UserInterface:
+
+import java.util.*;
+
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Pipe pipe = new Pipe();
+
+        System.out.println("Enter number of records to be added:");
+        int numberOfRecords = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter the records (orderId: pipeType):");
+        for (int i = 0; i < numberOfRecords; i++) {
+            String record = scanner.nextLine();
+            String[] details = record.split(":");
+            String orderId = details[0].trim();
+            String pipeType = details[1].trim();
+            pipe.addPipe(orderId, pipeType);
+        }
+
+        System.out.println("Enter the pipe type to be searched:");
+        String searchPipeType = scanner.nextLine().trim();
+        int count = pipe.findCountOfOrderIdsBasedOnThePipeType(searchPipeType);
+
+        if (count == -1) {
+            System.out.println("No Orders were found for " + searchPipeType);
+        } else {
+            System.out.println("Count of orders based on " + searchPipeType + " is " + count);
+        }
+
+        System.out.println("Enter the pipe type to get the list of orders:");
+        String listPipeType = scanner.nextLine().trim();
+        List<String> orderIds = pipe.findOrderIdsBasedOnThePipeType(listPipeType);
+
+        if (orderIds.isEmpty()) {
+            System.out.println("No Orders for the pipe type " + listPipeType);
+        } else {
+            System.out.println("Orders based on the " + listPipeType + " are:");
+            for (String orderId : orderIds) {
+                System.out.println(orderId);
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
+
+******Placement Ranking*****
+
+
+import java.util.*;
+
+public class PlacementInfo {
+    private Map<String, Float> placementDetailsMap = new HashMap<>();
+
+    public Map<String, Float> getPlacementDetailsMap() {
+        return placementDetailsMap;
+    }
+
+    public void setPlacementDetailsMap(Map<String, Float> placementDetailsMap) {
+        this.placementDetailsMap = placementDetailsMap;
+    }
+
+    // Method to add college rating details
+    public void addCollegeRatingDetails(String collegeName, float rating) {
+        placementDetailsMap.put(collegeName, rating);
+    }
+
+    // Method to find college rating based on the college name
+    public float findCollegeRating(String collegeName) {
+        return placementDetailsMap.getOrDefault(collegeName, -1f); // Return -1 if college not found
+    }
+
+    // Method to find colleges with the highest rating
+    public List<String> findCollegesWithHighestRating() {
+        List<String> highestRatedColleges = new ArrayList<>();
+        for (Map.Entry<String, Float> entry : placementDetailsMap.entrySet()) {
+            if (entry.getValue() > 4) {
+                highestRatedColleges.add(entry.getKey());
+            }
+        }
+        return highestRatedColleges; // Return list of highest rated colleges
+    }
+}
+
+
+
+#UserInterface:
+
+import java.util.*;
+
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        PlacementInfo placementInfo = new PlacementInfo();
+
+        System.out.println("Enter the number of records to be added:");
+        int numberOfRecords = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter the placement records in the format (collegeName : rating):");
+        for (int i = 0; i < numberOfRecords; i++) {
+            String record = scanner.nextLine();
+            String[] details = record.split(":");
+            String collegeName = details[0].trim();
+            float rating = Float.parseFloat(details[1].trim());
+            placementInfo.addCollegeRatingDetails(collegeName, rating);
+        }
+
+        System.out.println("Enter the name of the college to search for the placement rating:");
+        String searchCollegeName = scanner.nextLine().trim();
+        float rating = placementInfo.findCollegeRating(searchCollegeName);
+
+        if (rating == -1) {
+            System.out.println(searchCollegeName + " is an invalid college name");
+        } else {
+            System.out.println("The placement rating for " + searchCollegeName + " is " + rating);
+        }
+
+        List<String> highestRatedColleges = placementInfo.findCollegesWithHighestRating();
+        if (highestRatedColleges.isEmpty()) {
+            System.out.println("No colleges were found with highest rating");
+        } else {
+            System.out.println("The colleges with the highest ratings are:");
+            for (String college : highestRatedColleges) {
+                System.out.println(college);
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
+**********END**********
