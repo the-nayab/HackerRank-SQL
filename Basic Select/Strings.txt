@@ -6,42 +6,27 @@ public class BalancedWordChecker {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the string:");
-        
         String word = scanner.nextLine();
-
-        // Check for invalid string conditions
         if (word.length() < 2 || !word.matches("[a-z]+")) {
             System.out.println(word + " is an invalid string");
             return; // terminate the program
         }
-
-        // Calculate the midpoint
         int length = word.length();
         int mid = length / 2;
-
-        // Calculate left and right sums
         int leftSum = 0;
         int rightSum = 0;
-
-        // Left-hand side characters
         for (int i = 0; i < mid; i++) {
             leftSum += charValue(word.charAt(i));
         }
-
-        // Right-hand side characters
         for (int i = length - mid; i < length; i++) {
             rightSum += charValue(word.charAt(i));
         }
-
-        // Determine if the word is balanced
         if (leftSum == rightSum) {
             System.out.println(word + " is a balanced word");
         } else {
             System.out.println(word + " is not a balanced word");
         }
     }
-
-    // Method to get the positional value of a character
     private static int charValue(char c) {
         return c - 'a' + 1; // 'a' is 1, 'b' is 2, ..., 'z' is 26
     }
@@ -125,40 +110,27 @@ import java.util.Scanner;
 public class TreasureHunt {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        // Input for word count
         System.out.println("Enter word count");
         int wordCount = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-
-        // Validate word count
+        scanner.nextLine();
         if (wordCount < 2) {
             System.out.println("Invalid word count");
-            return; // Terminate the program
+            return;
         }
-
-        // Input for words
         List<String> words = new ArrayList<>();
         System.out.println("Enter the words");
         for (int i = 0; i < wordCount; i++) {
             String word = scanner.nextLine().trim();
-            // Validate the word for special characters, numbers, or whitespace
             if (!word.matches("[a-zA-Z]+")) {
                 System.out.println(word + " is an invalid word");
-                return; // Terminate the program
+                return;
             }
             words.add(word);
         }
-
-        // Input for the character to search
         System.out.println("Enter the character to search");
         char searchChar = scanner.nextLine().charAt(0);
-
-        // Lists to hold valid words
         List<String> withDuplicates = new ArrayList<>();
         List<String> withoutDuplicates = new ArrayList<>();
-
-        // Filter words based on character occurrences
         for (String word : words) {
             int count = 0;
             for (char c : word.toCharArray()) {
@@ -174,8 +146,6 @@ public class TreasureHunt {
                 }
             }
         }
-
-        // Output results
         if (withDuplicates.isEmpty() && withoutDuplicates.isEmpty()) {
             System.out.println("No words found");
         } else {
@@ -198,30 +168,21 @@ import java.util.Scanner;
 public class CapitalizeLastLetter {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
-        // Prompt for input
         System.out.println("Enter the string");
         String input = scanner.nextLine();
-
-        // Validate input for numbers
         if (input.matches(".*\\d.*")) {
             System.out.println(input + " is an invalid input with numbers");
-            return; // Terminate the program
+            return;
         }
-
-        // Validate input for special characters
         if (input.matches(".*[^a-zA-Z\\s].*")) {
             System.out.println(input + " is an invalid input with special characters");
-            return; // Terminate the program
+            return;
         }
-
-        // Process the valid input
         String[] words = input.split(" ");
         StringBuilder modifiedString = new StringBuilder();
         
         for (String word : words) {
             String modifiedWord = word;
-            // Capitalize the last letter
             if (word.length() > 0) {
                 char lastChar = word.charAt(word.length() - 1);
                 if (Character.isLowerCase(lastChar)) {
@@ -229,14 +190,10 @@ public class CapitalizeLastLetter {
                 }
             }
             modifiedString.append(modifiedWord).append(" ");
-            
-            // Check if the last letter was already uppercase
             if (word.length() > 0 && Character.isUpperCase(word.charAt(word.length() - 1))) {
                 System.out.println(word + word.length());
             }
         }
-
-        // Print the modified string
         System.out.println("Modified string: " + modifiedString.toString().trim());
     }
 }
